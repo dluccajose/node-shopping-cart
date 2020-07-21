@@ -7,7 +7,7 @@ function isLoggedIn(req, res, next) {
     res.redirect('/user/signin')
   }
   
-  function isNotLoggedIn(req, res, next) {
+function isNotLoggedIn(req, res, next) {
     // metodo agregado por passport
     console.log(req.isAuthenticated())
     if(!req.isAuthenticated()) {
@@ -15,7 +15,7 @@ function isLoggedIn(req, res, next) {
     } else {
       res.redirect('/')
     }
-  } 
+} 
 
 module.exports = {
     isLoggedIn,

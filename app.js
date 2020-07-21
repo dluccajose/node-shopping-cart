@@ -23,8 +23,15 @@ require('dotenv').config()
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
+}, function (err) {
+  if (err) {
+    console.log('Error conectando con la base de datos', err)
+  } else {
+    console.log('Conectado exitosa con la base de datos')
+  }
 })
 
+// Configuracion Passport
 require('./config/passport')
 
 // view engine setup
@@ -50,13 +57,16 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection}),
   cookie: { maxAge: 180 * 60 * 1000 }
 }))
+
+
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
+
 // middleware para saber si el usuario inicio sesion
-/* Las variables almacenadas en res.locals pueden ser utilizadas en las vistas
-   automaticamente */
+// Las variables almacenadas en res.locals pueden ser utilizadas en las vistas
+// automaticamente 
 app.use(function(req, res, next) {
   res.locals.isLogin = req.isAuthenticated()
   res.locals.session = req.session

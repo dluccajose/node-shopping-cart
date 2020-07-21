@@ -61,12 +61,14 @@ router.get('/shopping-cart/reduce/:id', function(req, res) {
   
   // Procesar compra
   router.post('/checkout', function(req, res, next) {
+
+    // Si el carrito esta vacio, redireccionamos
     if(!req.session.cart) {
       return res.redirect('/shopping-cart')
     }
   
     let cart = new Cart(req.session.cart)
-    var stripe = require('stripe')('sk_test_iACwJOBSrt3tfKRgYqli6cJR003Zj2PymE');
+    var stripe = require('stripe')(process.env.STRIPE_KEY);
   
     // `source` is obtained with Stripe.js; see https://stripe.com/docs/payments/accept-a-payment-charges#web-create-token
     stripe.charges.create(
@@ -76,12 +78,14 @@ router.get('/shopping-cart/reduce/:id', function(req, res) {
         source: req.body.stripeToken,
         description: 'My First Test Charge (created for API docs)',
       },
+
       function(err, charge) {
         
         if(err) {
           req.flash('error', err.message)
           return res.redirect('/checkout')
         }
+
         // Compra exitosa
         let order = new Order({
           user: req.user,
@@ -92,9 +96,11 @@ router.get('/shopping-cart/reduce/:id', function(req, res) {
         })
   
         order.save( function(err, result) {
+          
           if(err) {
               return console.log(err)
           }
+          
           req.flash('success', 'Has realizado tu compra exitosamente!')
           req.session.cart = null
           console.log(result)
