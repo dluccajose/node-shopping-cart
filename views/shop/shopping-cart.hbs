@@ -1,0 +1,38 @@
+{{#if products }}
+<div class="row">
+    <div class="col-xs-18 col-sm-6 col-md-8 offset-md-2 mt-3">
+        <ul class="list-group">
+            {{# each products}}
+                <li class="list-group-item">
+                    <strong>{{this.item.title}}</strong>
+                    <a href="shopping-cart/reduce/{{this.item._id}}">
+                        <button class="badge badge-danger">Eliminar 1</button>
+                    </a>
+                    <span class="badge badge-success">${{this.price}}</span>
+                    <span class="badge badge-info float-right">{{this.qty}}</span>
+                </li>   
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <hr>
+        <h3>Total: {{session.cart.totalPrice}}$</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <a href="/checkout" class="btn btn-info">Checkout</a>
+    </div>
+</div>
+{{else}}
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <h2>Tu carrito de compras esta vacio.</h2>
+    </div>
+</div>
+{{/if}}

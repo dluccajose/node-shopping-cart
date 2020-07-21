@@ -1,0 +1,24 @@
+<div class="row mt-3">
+    <div class="col-md-4 offset-md-4">
+        <h1>Iniciar Sesion</h1>
+        {{#if hasErrors}}
+            {{#each messages}} 
+                <div class="alert alert-danger">{{this}}</div>
+            {{/each}}
+        {{/if}}
+        <form action="/user/signin" method="post">
+            <div class="form-group">
+                <label for="">Email</label>
+                <input type="text" name="userEmail" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">Password</label>
+                <input type="password" name="userPassword" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-info">Enviar</button>
+            {{!-- Campo para el token csrf, proteccion extra --}}
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        </form>
+        <p>No tienes cuenta? <a href="/user/signup">Registrate aqui.</a></p>
+    </div>
+</div>

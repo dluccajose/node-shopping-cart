@@ -1,0 +1,32 @@
+<div class="row my-3">
+    <div class="col-md-8 offset-md-2">
+        <h2>Ordenes realizadas</h2>
+    </div>
+</div>
+    {{#each orders }}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <ul class="list-group">
+            {{#each this.items}}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ this.item.title }}
+                <span class="badge badge-primary badge-pill">{{this.qty}} articulos</span>
+            </li>
+            {{/each}}
+            </ul>      
+        </div>
+    </div>
+    <div class="row mb-3 mt-2">
+        <div class="col-md-8 offset-md-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" aria-current="page">
+                        Factura a nombre de: {{ this.name}}<br> 
+                        Precio total de la orden: {{ this.cart.totalPrice}}$
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    {{/each}}
+</div>
